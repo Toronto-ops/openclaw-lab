@@ -58,10 +58,15 @@ check_port_loopback 18792
 fi
 
 section "3) GitHub CLI auth status"
+if [[ "$MODE" == "ci" ]]; then
+  skip "CI mode: skipping gh auth check."
+else
 if gh auth status >/dev/null 2>&1; then
   pass "gh auth status OK (logged in)."
 else
   fail "gh auth status failed (not logged in or auth unavailable)."
+fi
+
 fi
 
 section "4) Hook enablement in ~/.openclaw/openclaw.json"
