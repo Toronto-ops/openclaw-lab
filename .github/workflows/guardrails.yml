@@ -1,0 +1,20 @@
+name: Guardrails
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  verify-guardrails:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Ensure script is executable
+        run: chmod +x scripts/verify-guardrails.sh
+
+      - name: Run guardrail verifier (CI mode)
+        env:
+          CI: "true"
+        run: bash scripts/verify-guardrails.sh --ci
